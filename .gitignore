@@ -1,2 +1,3 @@
 data/
-model_trained.pt
+*.pt
+.DS_Store
