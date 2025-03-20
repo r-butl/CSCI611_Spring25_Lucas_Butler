@@ -1,18 +1,20 @@
 import cv2
 from ultralytics import YOLO
+import os
 
 # Load trained model
-model = YOLO("/home/lrbutler/Desktop/611-Yolo-TrafficSigns/runs/detect/train6/weights/best.pt")  # Update path if needed
+model = YOLO("/home/lrbutler/Desktop/611/Assignment_3/runs/detect/train6/weights//best.pt")  # Update path if needed
 
 # Define threshold ranges for optimization
-confidence_thresholds = [0.3]
+confidence_thresholds = [0.9]
 nms_thresholds = [0.9]
 
 # Open video file
-video_path = "test_video.mp4"  # Update with your video file path
+input_video_path = "test_video.small.mp4"  # Update with your video file path
+output_video_path = "/research2/lrbutler"
 
 # Get video properties
-cap = cv2.VideoCapture(video_path)
+cap = cv2.VideoCapture(input_video_path)
 frame_width = int(cap.get(3))
 frame_height = int(cap.get(4))
 fps = int(cap.get(cv2.CAP_PROP_FPS))
@@ -24,7 +26,7 @@ for conf_thresh in confidence_thresholds:
         cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
 
         # Define output video writer with unique filename
-        output_filename = f"output_conf{conf_thresh}_nms{nms_thresh}.mp4"
+        output_filename = os.path.join(output_video_path, f"output_conf{conf_thresh}_nms{nms_thresh}.mp4")
         out = cv2.VideoWriter(output_filename, cv2.VideoWriter_fourcc(*'mp4v'), fps, (frame_width, frame_height))
 
         while cap.isOpened():
