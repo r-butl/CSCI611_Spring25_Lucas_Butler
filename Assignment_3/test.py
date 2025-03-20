@@ -3,7 +3,7 @@ from ultralytics import YOLO
 import os
 
 # Load trained model
-model = YOLO("/home/lrbutler/Desktop/611/Assignment_3/runs/detect/train6/weights//best.pt")  # Update path if needed
+model = YOLO("/runs/detect/train6/weights/best.pt")  # Update path if needed
 
 # Define threshold ranges for optimization
 confidence_thresholds = [0.9]
@@ -11,7 +11,7 @@ nms_thresholds = [0.9]
 
 # Open video file
 input_video_path = "test_video.small.mp4"  # Update with your video file path
-output_video_path = "/research2/lrbutler"
+output_video_path = "."
 
 # Get video properties
 cap = cv2.VideoCapture(input_video_path)
@@ -34,7 +34,6 @@ for conf_thresh in confidence_thresholds:
             if not ret:
                 break  # Exit if no more frames
 
-            # Run inference with current thresholds
             results = model(frame, conf=conf_thresh, iou=nms_thresh)
 
             # Process results
